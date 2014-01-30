@@ -272,10 +272,10 @@ class CBitcoinAddress : public CBase58Data
 public:
     enum
     {
-        PUBKEY_ADDRESS = 21, // Catcoin addresses start with 9, because cats has 9 lives
-        SCRIPT_ADDRESS = 88,
-        PUBKEY_ADDRESS_TEST = 23,
-        SCRIPT_ADDRESS_TEST = 83,
+        PUBKEY_ADDRESS = 27, // Unicorncoin addresses start with 9, because cats has 9 lives
+        SCRIPT_ADDRESS = 21,
+        PUBKEY_ADDRESS_TEST = 26,
+        SCRIPT_ADDRESS_TEST = 20,
     };
 
     bool Set(const CKeyID &id) {

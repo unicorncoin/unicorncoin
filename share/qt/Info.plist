@@ -15,19 +15,19 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleExecutable</key>
-	<string>Catcoin-Qt</string>
+	<string>Unicorncoin-Qt</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.catcoin.Catcoin-Qt</string>
+	<string>org.unicorncoin.Unicorncoin-Qt</string>
         <key>CFBundleURLTypes</key>
         <array>
           <dict>
             <key>CFBundleTypeRole</key>
             <string>Editor</string>
             <key>CFBundleURLName</key>
-            <string>org.catcoin.CatcoinPayment</string>
+            <string>org.unicorncoin.UnicorncoinPayment</string>
             <key>CFBundleURLSchemes</key>
             <array>
-              <string>catcoin</string>
+              <string>unicorncoin</string>
             </array>
           </dict>
         </array>

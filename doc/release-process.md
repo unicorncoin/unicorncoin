@@ -6,7 +6,7 @@ Release Process
 ###update (commit) version in sources
 
 
-	catcoin-qt.pro
+	unicorncoin-qt.pro
 	contrib/verifysfbinaries/verify.sh
 	doc/README*
 	share/setup.nsi
@@ -24,7 +24,7 @@ Release Process
 
 ##perform gitian builds
 
- From a directory containing the catcoin source, gitian-builder and gitian.sigs
+ From a directory containing the unicorncoin source, gitian-builder and gitian.sigs
   
 	export SIGNER=(your gitian key, ie bluematt, sipa, etc)
 	export VERSION=0.8.0
@@ -42,54 +42,54 @@ Release Process
 	wget 'http://downloads.sourceforge.net/project/boost/boost/1.50.0/boost_1_50_0.tar.bz2'
 	wget 'http://releases.qt-project.org/qt4/source/qt-everywhere-opensource-src-4.8.3.tar.gz'
 	cd ..
-	./bin/gbuild ../catcoin/contrib/gitian-descriptors/boost-win32.yml
+	./bin/gbuild ../unicorncoin/contrib/gitian-descriptors/boost-win32.yml
 	mv build/out/boost-win32-1.50.0-gitian2.zip inputs/
-	./bin/gbuild ../catcoin/contrib/gitian-descriptors/qt-win32.yml
+	./bin/gbuild ../unicorncoin/contrib/gitian-descriptors/qt-win32.yml
 	mv build/out/qt-win32-4.8.3-gitian-r1.zip inputs/
-	./bin/gbuild ../catcoin/contrib/gitian-descriptors/deps-win32.yml
-	mv build/out/catcoin-deps-0.0.5.zip inputs/
+	./bin/gbuild ../unicorncoin/contrib/gitian-descriptors/deps-win32.yml
+	mv build/out/unicorncoin-deps-0.0.5.zip inputs/
 
- Build catcoind and catcoin-qt on Linux32, Linux64, and Win32:
+ Build unicorncoind and unicorncoin-qt on Linux32, Linux64, and Win32:
   
-	./bin/gbuild --commit catcoin=v${VERSION} ../catcoin/contrib/gitian-descriptors/gitian.yml
-	./bin/gsign --signer $SIGNER --release ${VERSION} --destination ../gitian.sigs/ ../catcoin/contrib/gitian-descriptors/gitian.yml
+	./bin/gbuild --commit unicorncoin=v${VERSION} ../unicorncoin/contrib/gitian-descriptors/gitian.yml
+	./bin/gsign --signer $SIGNER --release ${VERSION} --destination ../gitian.sigs/ ../unicorncoin/contrib/gitian-descriptors/gitian.yml
 	pushd build/out
-	zip -r catcoin-${VERSION}-linux-gitian.zip *
-	mv catcoin-${VERSION}-linux-gitian.zip ../../
+	zip -r unicorncoin-${VERSION}-linux-gitian.zip *
+	mv unicorncoin-${VERSION}-linux-gitian.zip ../../
 	popd
-	./bin/gbuild --commit catcoin=v${VERSION} ../catcoin/contrib/gitian-descriptors/gitian-win32.yml
-	./bin/gsign --signer $SIGNER --release ${VERSION}-win32 --destination ../gitian.sigs/ ../catcoin/contrib/gitian-descriptors/gitian-win32.yml
+	./bin/gbuild --commit unicorncoin=v${VERSION} ../unicorncoin/contrib/gitian-descriptors/gitian-win32.yml
+	./bin/gsign --signer $SIGNER --release ${VERSION}-win32 --destination ../gitian.sigs/ ../unicorncoin/contrib/gitian-descriptors/gitian-win32.yml
 	pushd build/out
-	zip -r catcoin-${VERSION}-win32-gitian.zip *
-	mv catcoin-${VERSION}-win32-gitian.zip ../../
+	zip -r unicorncoin-${VERSION}-win32-gitian.zip *
+	mv unicorncoin-${VERSION}-win32-gitian.zip ../../
 	popd
 
   Build output expected:
 
-  1. linux 32-bit and 64-bit binaries + source (catcoin-${VERSION}-linux-gitian.zip)
-  2. windows 32-bit binary, installer + source (catcoin-${VERSION}-win32-gitian.zip)
+  1. linux 32-bit and 64-bit binaries + source (unicorncoin-${VERSION}-linux-gitian.zip)
+  2. windows 32-bit binary, installer + source (unicorncoin-${VERSION}-win32-gitian.zip)
   3. Gitian signatures (in gitian.sigs/${VERSION}[-win32]/(your gitian key)/
 
 repackage gitian builds for release as stand-alone zip/tar/installer exe
 
 **Linux .tar.gz:**
 
-	unzip catcoin-${VERSION}-linux-gitian.zip -d catcoin-${VERSION}-linux
-	tar czvf catcoin-${VERSION}-linux.tar.gz catcoin-${VERSION}-linux
-	rm -rf catcoin-${VERSION}-linux
+	unzip unicorncoin-${VERSION}-linux-gitian.zip -d unicorncoin-${VERSION}-linux
+	tar czvf unicorncoin-${VERSION}-linux.tar.gz unicorncoin-${VERSION}-linux
+	rm -rf unicorncoin-${VERSION}-linux
 
 **Windows .zip and setup.exe:**
 
-	unzip catcoin-${VERSION}-win32-gitian.zip -d catcoin-${VERSION}-win32
-	mv catcoin-${VERSION}-win32/catcoin-*-setup.exe .
-	zip -r catcoin-${VERSION}-win32.zip bitcoin-${VERSION}-win32
-	rm -rf catcoin-${VERSION}-win32
+	unzip unicorncoin-${VERSION}-win32-gitian.zip -d unicorncoin-${VERSION}-win32
+	mv unicorncoin-${VERSION}-win32/unicorncoin-*-setup.exe .
+	zip -r unicorncoin-${VERSION}-win32.zip bitcoin-${VERSION}-win32
+	rm -rf unicorncoin-${VERSION}-win32
 
 **Perform Mac build:**
 
   OSX binaries are created by Gavin Andresen on a 32-bit, OSX 10.6 machine.
 
-	qmake RELEASE=1 USE_UPNP=1 USE_QRCODE=1 catcoin-qt.pro
+	qmake RELEASE=1 USE_UPNP=1 USE_QRCODE=1 unicorncoin-qt.pro
 	make
 	export QTDIR=/opt/local/share/qt4  # needed to find translations/qt_*.qm files
 	T=$(contrib/qt_translations.py $QTDIR/translations src/qt/locale)
@@ -107,7 +107,7 @@ repackage gitian builds for release as stand-alone zip/tar/installer exe
 
 * create SHA256SUMS for builds, and PGP-sign it
 
-* update catcoin.pw version
+* update unicorncoin.org version
   make sure all OS download links go to the right versions
 
 * update forum version
@@ -129,32 +129,32 @@ Commit your signature to gitian.sigs:
 
 ### After 3 or more people have gitian-built, repackage gitian-signed zips:
 
-From a directory containing catcoin source, gitian.sigs and gitian zips
+From a directory containing unicorncoin source, gitian.sigs and gitian zips
 
 	export VERSION=0.5.1
-	mkdir catcoin-${VERSION}-linux-gitian
-	pushd catcoin-${VERSION}-linux-gitian
-	unzip ../catcoin-${VERSION}-linux-gitian.zip
+	mkdir unicorncoin-${VERSION}-linux-gitian
+	pushd unicorncoin-${VERSION}-linux-gitian
+	unzip ../unicorncoin-${VERSION}-linux-gitian.zip
 	mkdir gitian
-	cp ../catcoin/contrib/gitian-downloader/*.pgp ./gitian/
+	cp ../unicorncoin/contrib/gitian-downloader/*.pgp ./gitian/
 	for signer in $(ls ../gitian.sigs/${VERSION}/); do
-	 cp ../gitian.sigs/${VERSION}/${signer}/catcoin-build.assert ./gitian/${signer}-build.assert
-	 cp ../gitian.sigs/${VERSION}/${signer}/catcoin-build.assert.sig ./gitian/${signer}-build.assert.sig
+	 cp ../gitian.sigs/${VERSION}/${signer}/unicorncoin-build.assert ./gitian/${signer}-build.assert
+	 cp ../gitian.sigs/${VERSION}/${signer}/unicorncoin-build.assert.sig ./gitian/${signer}-build.assert.sig
 	done
-	zip -r catcoin-${VERSION}-linux-gitian.zip *
-	cp catcoin-${VERSION}-linux-gitian.zip ../
+	zip -r unicorncoin-${VERSION}-linux-gitian.zip *
+	cp unicorncoin-${VERSION}-linux-gitian.zip ../
 	popd
-	mkdir catcoin-${VERSION}-win32-gitian
-	pushd catcoin-${VERSION}-win32-gitian
-	unzip ../catcoin-${VERSION}-win32-gitian.zip
+	mkdir unicorncoin-${VERSION}-win32-gitian
+	pushd unicorncoin-${VERSION}-win32-gitian
+	unzip ../unicorncoin-${VERSION}-win32-gitian.zip
 	mkdir gitian
-	cp ../catcoin/contrib/gitian-downloader/*.pgp ./gitian/
+	cp ../unicorncoin/contrib/gitian-downloader/*.pgp ./gitian/
 	for signer in $(ls ../gitian.sigs/${VERSION}-win32/); do
-	 cp ../gitian.sigs/${VERSION}-win32/${signer}/catcoin-build.assert ./gitian/${signer}-build.assert
-	 cp ../gitian.sigs/${VERSION}-win32/${signer}/catcoin-build.assert.sig ./gitian/${signer}-build.assert.sig
+	 cp ../gitian.sigs/${VERSION}-win32/${signer}/unicorncoin-build.assert ./gitian/${signer}-build.assert
+	 cp ../gitian.sigs/${VERSION}-win32/${signer}/unicorncoin-build.assert.sig ./gitian/${signer}-build.assert.sig
 	done
-	zip -r catcoin-${VERSION}-win32-gitian.zip *
-	cp catcoin-${VERSION}-win32-gitian.zip ../
+	zip -r unicorncoin-${VERSION}-win32-gitian.zip *
+	cp unicorncoin-${VERSION}-win32-gitian.zip ../
 	popd
 
 - Upload gitian zips to SourceForge

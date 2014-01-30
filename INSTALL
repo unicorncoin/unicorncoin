@@ -1,9 +1,9 @@
-Building Catcoin
+Building Unicorncoin
 
-See doc/readme-qt.rst for instructions on building Catcoin-Qt,
+See doc/readme-qt.rst for instructions on building Unicorncoin-Qt,
 the intended-for-end-users, nice-graphical-interface, reference
-implementation of Catcoin.
+implementation of Unicorncoin.
 
-See doc/build-*.txt for instructions on building catcoind,
+See doc/build-*.txt for instructions on building unicorncoind,
 the intended-for-services, no-graphical-interface, reference
-implementation of Catcoin.
+implementation of Unicorncoin.

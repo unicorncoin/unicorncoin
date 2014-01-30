@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2013-2014 The Catcoin developers
+// Copyright (c) 2013-2014 The Unicorncoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -33,7 +33,7 @@ unsigned int nTransactionsUpdated = 0;
 
 map<uint256, CBlockIndex*> mapBlockIndex;
 uint256 hashGenesisBlock("0xbc3b4ec43c4ebb2fef49e6240812549e61ffa623d9418608aa90eaad26c96296");
-static CBigNum bnProofOfWorkLimit(~uint256(0) >> 20); // Catcoin: starting difficulty is 1 / 2^12
+static CBigNum bnProofOfWorkLimit(~uint256(0) >> 20); // Unicorncoin: starting difficulty is 1 / 2^12
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
 uint256 nBestChainWork = 0;
@@ -65,7 +65,7 @@ map<uint256, set<uint256> > mapOrphanTransactionsByPrev;
 // Constant stuff for coinbase transactions we create:
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = "Catcoin Signed Message:\n";
+const string strMessageMagic = "Unicorncoin Signed Message:\n";
 
 double dHashesPerSec = 0.0;
 int64 nHPSTimerStart = 0;
@@ -356,7 +356,7 @@ unsigned int LimitOrphanTxSize(unsigned int nMaxOrphans)
 
 bool CTxOut::IsDust() const
 {
-    // Catcoin: IsDust() detection disabled, allows any valid dust to be relayed.
+    // Unicorncoin: IsDust() detection disabled, allows any valid dust to be relayed.
     // The fees imposed on each dust txo is considered sufficient spam deterrant. 
     return false;
 }
@@ -613,7 +613,7 @@ int64 CTransaction::GetMinFee(unsigned int nBlockSize, bool fAllowFree,
             nMinFee = 0;
     }
 
-    // Catcoin
+    // Unicorncoin
     // To limit dust spam, add nBaseFee for each output less than DUST_SOFT_LIMIT
     BOOST_FOREACH(const CTxOut& txout, vout)
         if (txout.nValue < DUST_SOFT_LIMIT)
@@ -1064,19 +1064,19 @@ uint256 static GetOrphanRoot(const CBlockHeader* pblock)
 
 int64 static GetBlockValue(int nHeight, int64 nFees)
 {
-    int64 nSubsidy = 50 * COIN;
+    int64 nSubsidy = 1 * COIN;
 
-    // Subsidy is cut in half every 210000 blocks, which will occur approximately every 4 years
-    nSubsidy >>= (nHeight / 210000);
+    // Subsidy is cut in half every 617000 blocks, which will occur approximately every 4 years
+    nSubsidy >>= (nHeight / 617000);
 
     return nSubsidy + nFees;
 }
 
-static const int64 nTargetTimespan = 6 * 60 * 60; // 6 hours
-static const int64 nTargetSpacing = 10 * 60;
+static const int64 nTargetTimespan = 3 * 60 * 60; // 3 hours
+static const int64 nTargetSpacing = 3 * 60; // 3 minutes
 static const int64 nInterval = nTargetTimespan / nTargetSpacing;
 
-static const int64 nTargetTimespanOld = 14 * 24 * 60 * 60; // two weeks
+static const int64 nTargetTimespanOld = 10 * 60 * 60; // ten hours
 static const int64 nIntervalOld = nTargetTimespanOld / nTargetSpacing;
 
 //
@@ -1159,7 +1159,7 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
         return pindexLast->nBits;
     }
 
-    // Catcoin: This fixes an issue where a 51% attack can change difficulty at will.
+    // Unicorncoin: This fixes an issue where a 51% attack can change difficulty at will.
     // Go back the full period unless it's the first retarget after genesis. Code courtesy of Art Forz
     int blockstogoback = nIntervalLocal-1;
     if ((pindexLast->nHeight+1) != nIntervalLocal)
@@ -2104,7 +2104,7 @@ bool CBlock::CheckBlock(CValidationState &state, bool fCheckPOW, bool fCheckMerk
     if (vtx.empty() || vtx.size() > MAX_BLOCK_SIZE || ::GetSerializeSize(*this, SER_NETWORK, PROTOCOL_VERSION) > MAX_BLOCK_SIZE)
         return state.DoS(100, error("CheckBlock() : size limits failed"));
 
-    // Catcoin: Special short-term limits to avoid 10,000 BDB lock limit:
+    // Unicorncoin: Special short-term limits to avoid 10,000 BDB lock limit:
     if (GetBlockTime() < 1376568000)  // stop enforcing 15 August 2013 00:00:00
     {
         // Rule is: #unique txids referenced <= 4,500
@@ -2266,7 +2266,7 @@ bool CBlock::AcceptBlock(CValidationState &state, CDiskBlockPos *dbp)
 
 bool CBlockIndex::IsSuperMajority(int minVersion, const CBlockIndex* pstart, unsigned int nRequired, unsigned int nToCheck)
 {
-    // Catcoin: temporarily disable v2 block lockin until we are ready for v2 transition
+    // Unicorncoin: temporarily disable v2 block lockin until we are ready for v2 transition
     return false;
     unsigned int nFound = 0;
     for (unsigned int i = 0; i < nToCheck && nFound < nRequired && pstart != NULL; i++)
@@ -2785,7 +2785,7 @@ bool InitBlockIndex() {
         //   vMerkleTree: 97ddfbbae6
 
         // Genesis block
-        const char* pszTimestamp = "NY Times - December 23, 2013 - For Today's Babes, Toyland Is Digital";
+        const char* pszTimestamp = "NY Times - January 30, 2014 - Nintendo Chief Announces Foray Into Health Care";
         CTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
@@ -2797,13 +2797,13 @@ bool InitBlockIndex() {
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1387838302;
+        block.nTime    = 1391102640;
         block.nBits    = 0x1e0ffff0;
         block.nNonce   = 588050;
 
         if (fTestNet)
         {
-            block.nTime    = 1317798646;
+            block.nTime    = 1391100000;
             block.nNonce   = 385270584;
         }
 
@@ -3085,7 +3085,7 @@ bool static AlreadyHave(const CInv& inv)
 // The message start string is designed to be unlikely to occur in normal data.
 // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
 // a large 4-byte int at any alignment.
-unsigned char pchMessageStart[4] = { 0xfc, 0xc1, 0xb7, 0xdc }; // Catcoin: increase each by adding 3 to bitcoin's value.
+unsigned char pchMessageStart[4] = { 0xfc, 0xc1, 0xb7, 0xdc }; // Unicorncoin: increase each by adding 3 to bitcoin's value.
 
 
 void static ProcessGetData(CNode* pfrom)
@@ -4127,7 +4127,7 @@ bool SendMessages(CNode* pto, bool fSendTrickle)
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// CatcoinMiner
+// UnicorncoinMiner
 //
 
 int static FormatHashBlocks(void* pbuffer, unsigned int len)
@@ -4540,7 +4540,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
         return false;
 
     //// debug print
-    printf("CatcoinMiner:\n");
+    printf("UnicorncoinMiner:\n");
     printf("proof-of-work found  \n  hash: %s  \ntarget: %s\n", hash.GetHex().c_str(), hashTarget.GetHex().c_str());
     pblock->print();
     printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
@@ -4549,7 +4549,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     {
         LOCK(cs_main);
         if (pblock->hashPrevBlock != hashBestChain)
-            return error("CatcoinMiner : generated block is stale");
+            return error("UnicorncoinMiner : generated block is stale");
 
         // Remove key from key pool
         reservekey.KeepKey();
@@ -4563,17 +4563,17 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
         // Process this block the same as if we had received it from another node
         CValidationState state;
         if (!ProcessBlock(state, NULL, pblock))
-            return error("CatcoinMiner : ProcessBlock, block not accepted");
+            return error("UnicorncoinMiner : ProcessBlock, block not accepted");
     }
 
     return true;
 }
 
-void static CatcoinMiner(CWallet *pwallet)
+void static UnicorncoinMiner(CWallet *pwallet)
 {
-    printf("CatcoinMiner started\n");
+    printf("UnicorncoinMiner started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
-    RenameThread("catcoin-miner");
+    RenameThread("unicorncoin-miner");
 
     // Each thread has its own key and counter
     CReserveKey reservekey(pwallet);
@@ -4595,7 +4595,7 @@ void static CatcoinMiner(CWallet *pwallet)
         CBlock *pblock = &pblocktemplate->block;
         IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
 
-        printf("Running CatcoinMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
+        printf("Running UnicorncoinMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
                ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
         //
@@ -4707,7 +4707,7 @@ void static CatcoinMiner(CWallet *pwallet)
     } }
     catch (boost::thread_interrupted)
     {
-        printf("CatcoinMiner terminated\n");
+        printf("UnicorncoinMiner terminated\n");
         throw;
     }
 }
@@ -4732,7 +4732,7 @@ void GenerateBitcoins(bool fGenerate, CWallet* pwallet)
 
     minerThreads = new boost::thread_group();
     for (int i = 0; i < nThreads; i++)
-        minerThreads->create_thread(boost::bind(&CatcoinMiner, pwallet));
+        minerThreads->create_thread(boost::bind(&UnicorncoinMiner, pwallet));
 }
 
 // Amount compression:

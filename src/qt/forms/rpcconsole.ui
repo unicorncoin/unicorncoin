@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Catcoin - Debug window</string>
+   <string>Unicorncoin - Debug window</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
@@ -36,7 +36,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Catcoin Core</string>
+          <string>Unicorncoin Core</string>
          </property>
         </widget>
        </item>
@@ -345,7 +345,7 @@
        <item row="16" column="0">
         <widget class="QPushButton" name="openDebugLogfileButton">
          <property name="toolTip">
-          <string>Open the Catcoin debug log file from the current data directory. This can take a few seconds for large log files.</string>
+          <string>Open the Unicorncoin debug log file from the current data directory. This can take a few seconds for large log files.</string>
          </property>
          <property name="text">
           <string>&amp;Open</string>
@@ -371,7 +371,7 @@
        <item row="18" column="0">
         <widget class="QPushButton" name="showCLOptionsButton">
          <property name="toolTip">
-          <string>Show the Catcoin-Qt help message to get a list with possible Catcoin command-line options.</string>
+          <string>Show the Unicorncoin-Qt help message to get a list with possible Unicorncoin command-line options.</string>
          </property>
          <property name="text">
           <string>&amp;Show</string>

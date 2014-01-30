@@ -89,8 +89,8 @@
 ["NOP", "2SWAP 1"],
 ["1", "2 3 2SWAP 1"],
 
-["'a' 'b'", "CAT", "CAT disabled"],
-["'a' 'b' 0", "IF CAT ELSE 1 ENDIF", "CAT disabled"],
+["'a' 'b'", "UNIC", "UNIC disabled"],
+["'a' 'b' 0", "IF UNIC ELSE 1 ENDIF", "UNIC disabled"],
 ["'abc' 1 1", "SUBSTR", "SUBSTR disabled"],
 ["'abc' 1 1 0", "IF SUBSTR ELSE 1 ENDIF", "SUBSTR disabled"],
 ["'abc' 2 0", "IF LEFT ELSE 1 ENDIF", "LEFT disabled"],

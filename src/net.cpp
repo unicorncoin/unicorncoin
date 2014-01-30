@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2013-2014 The Catcoin developers
+// Copyright (c) 2013-2014 The Unicorncoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -1113,7 +1113,7 @@ void ThreadMapPort()
             }
         }
 
-        string strDesc = "Catcoin " + FormatFullVersion();
+        string strDesc = "Unicorncoin " + FormatFullVersion();
 
         try {
             while (true) {
@@ -1193,12 +1193,12 @@ void MapPort(bool)
 // The first name is used as information source for addrman.
 // The second name should resolve to a list of seed addresses.
 static const char *strMainNetDNSSeed[][2] = {
-    {"catcoin.pw", "seed.catcoin.pw"},
+    {"unicorncoin.org", "78.153.43.236"},
     {NULL, NULL}
 };
 
 static const char *strTestNetDNSSeed[][2] = {
-    {"catcoin.pw", "testnet-seed.catcoin.pw"},
+    {"unicorncoin.org", "testnet-seed.unicorncoin.org"},
     {NULL, NULL}
 };
 
@@ -1680,7 +1680,7 @@ bool BindListenPort(const CService &addrBind, string& strError)
     {
         int nErr = WSAGetLastError();
         if (nErr == WSAEADDRINUSE)
-            strError = strprintf(_("Unable to bind to %s on this computer. Catcoin is probably already running."), addrBind.ToString().c_str());
+            strError = strprintf(_("Unable to bind to %s on this computer. Unicorncoin is probably already running."), addrBind.ToString().c_str());
         else
             strError = strprintf(_("Unable to bind to %s on this computer (bind returned error %d, %s)"), addrBind.ToString().c_str(), nErr, strerror(nErr));
         printf("%s\n", strError.c_str());
